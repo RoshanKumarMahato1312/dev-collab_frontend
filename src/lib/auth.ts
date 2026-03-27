@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 const TOKEN_KEY = "dev-collab-token";
 
