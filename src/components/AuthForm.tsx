@@ -40,16 +40,23 @@ export default function AuthForm({ mode }: AuthFormProps) {
   return (
     <form
       onSubmit={onSubmit}
-      className="w-full max-w-md space-y-4 rounded-2xl border border-zinc-300 bg-white p-7 shadow-lg shadow-zinc-300/40"
+      className="surface-panel w-full max-w-md space-y-5 rounded-3xl p-7"
     >
-      <h1 className="text-2xl font-bold text-zinc-950">{mode === "login" ? "Welcome back" : "Create account"}</h1>
-      <p className="text-sm text-zinc-600">Collaborate with your team in one shared workspace.</p>
+      <div className="space-y-2">
+        <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">Secure Access</p>
+        <h1 className="heading-font text-3xl font-semibold tracking-tight text-slate-900">
+          {mode === "login" ? "Welcome back" : "Create account"}
+        </h1>
+        <p className="text-sm leading-6 text-slate-500">
+          Collaborate with your team in one workspace without losing context.
+        </p>
+      </div>
       {mode === "signup" && (
         <input
           value={name}
           onChange={(event) => setName(event.target.value)}
           placeholder="Name"
-          className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2.5 outline-none ring-zinc-400 transition focus:ring-2"
+          className="glow-input w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition placeholder:text-slate-400"
           required
         />
       )}
@@ -58,7 +65,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         placeholder="Email"
-        className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2.5 outline-none ring-zinc-400 transition focus:ring-2"
+        className="glow-input w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition placeholder:text-slate-400"
         required
       />
       <input
@@ -66,16 +73,16 @@ export default function AuthForm({ mode }: AuthFormProps) {
         value={password}
         onChange={(event) => setPassword(event.target.value)}
         placeholder="Password"
-        className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2.5 outline-none ring-zinc-400 transition focus:ring-2"
+        className="glow-input w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none transition placeholder:text-slate-400"
         required
       />
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-500">{error}</p>}
       <button
         type="submit"
-        className="w-full rounded-lg bg-zinc-950 px-4 py-2.5 font-semibold text-white transition hover:bg-zinc-800 disabled:opacity-60"
+        className="primary-button w-full rounded-xl px-4 py-3 font-semibold transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60"
         disabled={loading}
       >
-        {loading ? "Please wait..." : mode === "login" ? "Login" : "Sign up"}
+        {loading ? "Syncing..." : mode === "login" ? "Enter Workspace" : "Create Workspace"}
       </button>
     </form>
   );

@@ -16,5 +16,11 @@ export default function HomePage() {
     router.replace("/login");
   }, [router]);
 
-  return <div className="flex min-h-screen items-center justify-center">Loading...</div>;
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-transparent text-slate-500">
+      <div className="surface-panel rounded-2xl px-5 py-4 text-xs font-semibold uppercase tracking-[0.3em]">
+        Booting workspace...
+      </div>
+    </div>
+  );
 }

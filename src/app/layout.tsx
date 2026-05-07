@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fira_Code, Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bodyFont = Plus_Jakarta_Sans({
+  variable: "--font-body",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const monoFont = Fira_Code({
+  variable: "--font-mono",
+  subsets: ["latin"],
+});
+
+const headingFont = Space_Grotesk({
+  variable: "--font-heading",
   subsets: ["latin"],
 });
 
@@ -25,7 +30,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${bodyFont.variable} ${monoFont.variable} ${headingFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

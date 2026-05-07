@@ -1,33 +1,129 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f4f4f5;
-  --foreground: #09090b;
+  --background: #f4f7fb;
+  --foreground: #0b1220;
+  --surface: #ffffff;
+  --surface-2: #f0f4fa;
+  --border: rgba(15, 23, 42, 0.12);
+  --accent: #0284c7;
+  --accent-2: #16a34a;
+  --muted: #6b7280;
+  --danger: #ef4444;
+  --shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+  --shadow-strong: 0 24px 60px rgba(2, 132, 199, 0.18);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-accent: var(--accent);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-heading);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
   min-height: 100vh;
+  background-image:
+    radial-gradient(circle at top left, rgba(14, 165, 233, 0.12), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.12), transparent 30%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
 }
 
 input,
 select,
 textarea {
-  color: #09090b;
+  color: var(--foreground);
+}
+
+::selection {
+  background: rgba(0, 229, 255, 0.25);
+  color: #ffffff;
+}
+
+.industrial-grid {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.surface-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.surface-panel-muted {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.glow-input:focus {
+  border-color: rgba(14, 165, 233, 0.6);
+  box-shadow: 0 0 0 1px rgba(14, 165, 233, 0.15), 0 0 0 6px rgba(14, 165, 233, 0.08);
+}
+
+.primary-button {
+  background-image: linear-gradient(120deg, #0ea5e9 0%, #22c55e 100%);
+  color: #041016;
+  box-shadow: 0 16px 30px rgba(2, 132, 199, 0.25);
+}
+
+.primary-button:hover {
+  animation: shimmer 1.8s ease-in-out infinite;
+  box-shadow: var(--shadow-strong);
+}
+
+.heading-font {
+  font-family: var(--font-heading), var(--font-body), sans-serif;
+}
+
+.card-hover {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.14);
+}
+
+.accent-ring {
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18);
+}
+
+.fade-in {
+  animation: fade-in 420ms ease-out both;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

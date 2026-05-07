@@ -37,29 +37,36 @@ export default function ProjectList({ projects, currentUserId, onCreated, onUpda
   };
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[340px_1fr]">
-      <div className="rounded-2xl border border-zinc-300 bg-white p-5 shadow-md shadow-zinc-300/30">
-        <h2 className="mb-3 text-lg font-semibold text-zinc-950">New Project</h2>
+    <div className="grid gap-6 xl:grid-cols-[360px_1fr]">
+      <div className="surface-panel fade-in rounded-2xl p-5">
+        <h2 className="heading-font mb-2 text-lg font-semibold text-slate-900">New Project</h2>
+        <p className="mb-4 text-sm text-slate-500">Launch a new workspace card with status and activity tracking.</p>
         <input
           value={name}
           onChange={(event) => setName(event.target.value)}
           placeholder="Project name"
-          className="mb-2 w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2"
+          className="glow-input mb-3 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-slate-900 placeholder:text-slate-400"
         />
         <textarea
           value={description}
           onChange={(event) => setDescription(event.target.value)}
           placeholder="Project description"
-          className="mb-2 min-h-24 w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2"
+          className="glow-input mb-3 min-h-28 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-slate-900 placeholder:text-slate-400"
         />
-        <button onClick={createProject} className="rounded-lg bg-zinc-950 px-4 py-2 text-sm font-semibold text-white">
+        <button onClick={createProject} className="primary-button rounded-xl px-4 py-2.5 text-sm font-semibold">
           Create
         </button>
       </div>
 
-      <div className="rounded-2xl border border-zinc-300 bg-white p-5 shadow-md shadow-zinc-300/30">
-        <h2 className="mb-3 text-lg font-semibold text-zinc-950">Your Projects</h2>
-        <div className="space-y-3">
+      <div className="surface-panel fade-in rounded-2xl p-5">
+        <div className="mb-4 flex items-end justify-between gap-4">
+          <div>
+            <h2 className="heading-font text-lg font-semibold text-slate-900">Your Projects</h2>
+            <p className="text-sm text-slate-500">Active and completed workspaces at a glance.</p>
+          </div>
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Live grid</span>
+        </div>
+        <div className="grid gap-3 xl:grid-cols-2">
           {projects.map((project) => {
             const canCloseProject =
               project.currentUserRole === "owner" ||
@@ -67,42 +74,62 @@ export default function ProjectList({ projects, currentUserId, onCreated, onUpda
               String(project.owner?._id ?? "") === String(currentUserId);
 
             return (
-            <div
-              key={project._id}
-              className="w-full rounded-xl border border-zinc-300 bg-zinc-50 p-3 text-left transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md"
-            >
-              <div className="mb-2 flex items-center justify-between">
-                <h3 className="font-medium text-zinc-900">{project.name}</h3>
-                <span
-                  className={`rounded px-2 py-1 text-xs font-medium ${
-                    project.status === "completed" ? "bg-emerald-100 text-emerald-700" : "bg-blue-100 text-blue-700"
-                  }`}
-                >
-                  {project.status === "completed" ? "Completed" : "Active"}
-                </span>
-              </div>
-              <p className="mb-3 text-sm text-zinc-600">{project.description}</p>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => router.push(`/projects/${project._id}`)}
-                  className="rounded-lg border border-zinc-400 bg-white px-3 py-2 text-xs font-medium text-zinc-900"
-                >
-                  Open
-                </button>
-                {canCloseProject && project.status !== "completed" && (
-                  <button
-                    onClick={() => completeProject(project._id)}
-                    className="rounded-lg bg-zinc-900 px-3 py-2 text-xs font-medium text-white"
-                    disabled={completingId === project._id}
+              <div
+                key={project._id}
+                className="card-hover group rounded-2xl border border-slate-200 bg-white p-4 hover:border-sky-200 hover:bg-sky-50"
+              >
+                <div className="mb-3 flex items-start justify-between gap-3">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full ${
+                          project.status === "completed"
+                            ? "bg-slate-400"
+                            : "bg-emerald-500"
+                        }`}
+                      />
+                      <h3 className="font-medium text-slate-900">{project.name}</h3>
+                    </div>
+                    <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-500">{project.description}</p>
+                  </div>
+                  <span
+                    className={`rounded-full border px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.2em] ${
+                      project.status === "completed"
+                        ? "border-slate-200 bg-slate-50 text-slate-500"
+                        : "border-emerald-200 bg-emerald-50 text-emerald-600"
+                    }`}
                   >
-                    {completingId === project._id ? "Closing..." : "Close Project"}
+                    {project.status === "completed" ? "Completed" : "Active"}
+                  </span>
+                </div>
+
+                <div className="mb-4 flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                  <span>{project.members?.length ?? 0} members</span>
+                  <span>{project.currentUserRole ?? "member"}</span>
+                  <span>{project.updatedAt ? new Date(project.updatedAt).toLocaleDateString() : "recent"}</span>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => router.push(`/projects/${project._id}`)}
+                    className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 transition hover:border-sky-200"
+                  >
+                    Open
                   </button>
-                )}
+                  {canCloseProject && project.status !== "completed" && (
+                    <button
+                      onClick={() => completeProject(project._id)}
+                      className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-medium text-rose-600 transition hover:bg-rose-100"
+                      disabled={completingId === project._id}
+                    >
+                      {completingId === project._id ? "Closing..." : "Close Project"}
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
             );
           })}
-          {projects.length === 0 && <p className="text-sm text-zinc-500">No projects yet.</p>}
+          {projects.length === 0 && <p className="text-sm text-slate-500">No projects yet.</p>}
         </div>
       </div>
     </div>

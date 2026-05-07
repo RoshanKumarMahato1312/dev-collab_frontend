@@ -19,18 +19,19 @@ export default function TimelinePanel({ projectId }: TimelinePanelProps) {
   }, [projectId]);
 
   return (
-    <div className="rounded-2xl border border-zinc-300 bg-white p-4 shadow-md shadow-zinc-300/30">
-      <h3 className="mb-3 text-lg font-semibold text-zinc-950">Activity Timeline</h3>
-      <div className="max-h-80 space-y-2 overflow-y-auto">
+    <div className="surface-panel fade-in rounded-2xl p-4">
+      <h3 className="heading-font mb-2 text-lg font-semibold text-slate-900">Activity Timeline</h3>
+      <p className="mb-4 text-xs text-slate-500">Recent workspace activity and audit trail.</p>
+      <div className="max-h-[32rem] space-y-3 overflow-y-auto pr-1">
         {activities.map((activity) => (
-          <div key={activity._id} className="rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-sm">
-            <p className="font-medium text-zinc-900">
+          <div key={activity._id} className="card-hover rounded-2xl border border-slate-200 bg-white p-3 text-sm">
+            <p className="font-medium text-slate-900">
               {activity.actor?.name ?? "User"} {activity.action}
             </p>
-            <p className="text-xs text-zinc-600">{formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true })}</p>
+            <p className="mt-1 text-xs text-slate-500">{formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true })}</p>
           </div>
         ))}
-        {activities.length === 0 && <p className="text-sm text-zinc-600">No activity yet.</p>}
+        {activities.length === 0 && <p className="text-sm text-slate-500">No activity yet.</p>}
       </div>
     </div>
   );

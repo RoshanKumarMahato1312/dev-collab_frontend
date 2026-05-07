@@ -122,24 +122,32 @@ export default function ChatPanel({ projectId }: ChatPanelProps) {
   };
 
   return (
-    <div className="rounded-2xl border border-zinc-300 bg-white p-4 shadow-md shadow-zinc-300/30">
-      <div className="mb-2 flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-zinc-950">Project Chat</h3>
-        <span className="text-xs font-medium text-emerald-700">Online: {onlineUsers.length}</span>
+    <div className="surface-panel fade-in rounded-2xl p-4">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <div>
+          <h3 className="heading-font text-lg font-semibold text-slate-900">Project Chat</h3>
+          <p className="text-xs text-slate-500">Realtime feed with edit window and presence</p>
+        </div>
+        <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700">
+          Online: {onlineUsers.length}
+        </span>
       </div>
-      <div className="mb-2 h-64 space-y-2 overflow-y-auto rounded-lg border border-zinc-300 bg-zinc-100 p-2">
+      <div className="mb-3 h-72 space-y-3 overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-3">
         {messages.map((msg) => (
-          <div key={msg._id} className="rounded-lg border border-zinc-200 bg-white p-2 text-sm">
-            <p className="font-semibold text-zinc-900">{msg.sender?.name ?? "User"}</p>
+          <div key={msg._id} className="card-hover rounded-2xl border border-slate-200 bg-white p-3 text-sm shadow-[0_12px_24px_rgba(15,23,42,0.08)]">
+            <div className="flex items-center justify-between gap-3">
+              <p className="font-medium text-slate-900">{msg.sender?.name ?? "User"}</p>
+              <p className="text-xs text-slate-500">{formatDistanceToNow(new Date(msg.createdAt), { addSuffix: true })}</p>
+            </div>
             {editingMessageId === msg._id ? (
               <div className="mt-1 space-y-2">
                 <input
                   value={editingText}
                   onChange={(event) => setEditingText(event.target.value)}
-                  className="w-full rounded border border-zinc-300 px-2 py-1"
+                  className="glow-input w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900"
                 />
                 <div className="flex gap-2">
-                  <button onClick={saveEditedMessage} className="rounded bg-zinc-900 px-2 py-1 text-xs text-white">
+                  <button onClick={saveEditedMessage} className="primary-button rounded-lg px-3 py-1.5 text-xs font-medium">
                     Save
                   </button>
                   <button
@@ -147,17 +155,16 @@ export default function ChatPanel({ projectId }: ChatPanelProps) {
                       setEditingMessageId("");
                       setEditingText("");
                     }}
-                    className="rounded border border-zinc-300 px-2 py-1 text-xs"
+                    className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-600"
                   >
                     Cancel
                   </button>
                 </div>
               </div>
             ) : (
-              <p className="text-zinc-800">{msg.text}</p>
+              <p className="mt-2 whitespace-pre-wrap leading-6 text-slate-600">{msg.text}</p>
             )}
-            <div className="mt-1 flex items-center gap-2">
-              <p className="text-xs text-zinc-500">{formatDistanceToNow(new Date(msg.createdAt), { addSuffix: true })}</p>
+            <div className="mt-3 flex items-center gap-2">
               {canEditMessage(msg) && editingMessageId !== msg._id && (
                 <button
                   onClick={() => {
@@ -165,7 +172,7 @@ export default function ChatPanel({ projectId }: ChatPanelProps) {
                     setEditingText(msg.text);
                     setChatError("");
                   }}
-                  className="text-xs font-medium text-zinc-700 underline"
+                  className="text-xs font-medium text-sky-600 underline decoration-sky-200 underline-offset-4"
                 >
                   Edit
                 </button>
@@ -174,8 +181,8 @@ export default function ChatPanel({ projectId }: ChatPanelProps) {
           </div>
         ))}
       </div>
-      {chatError && <p className="mb-2 text-xs text-red-600">{chatError}</p>}
-      <p className="mb-1 text-xs text-zinc-600">{typingLabel}</p>
+      {chatError && <p className="mb-2 text-xs text-red-500">{chatError}</p>}
+      <p className="mb-2 min-h-4 text-xs text-slate-500">{typingLabel}</p>
       <div className="flex gap-2">
         <input
           value={text}
@@ -188,9 +195,9 @@ export default function ChatPanel({ projectId }: ChatPanelProps) {
             }
           }}
           placeholder="Send a message"
-          className="flex-1 rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2"
+          className="glow-input flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400"
         />
-        <button onClick={sendMessage} className="rounded-lg bg-zinc-950 px-3 py-2 font-medium text-white">
+        <button onClick={sendMessage} className="primary-button rounded-xl px-4 py-3 font-medium">
           Send
         </button>
       </div>
