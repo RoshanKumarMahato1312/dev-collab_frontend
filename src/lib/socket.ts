@@ -18,7 +18,7 @@ export const getSocket = (token: string): Socket => {
 
   socketToken = token;
 
-  socket = io(process.env.NEXT_PUBLIC_SOCKET_URL ?? "http://localhost:5000", {
+  socket = io(process.env.NEXT_PUBLIC_SOCKET_URL ?? "https://dev-collab-backend-3.onrender.com", {
     auth: { token }
   });
 
